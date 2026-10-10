@@ -1,4 +1,5 @@
 import { connection } from "next/server";
+import { requireAdmin } from "@/lib/session";
 import { asc } from "drizzle-orm";
 import { getDb } from "@/db/client";
 import { holidays } from "@/db/schema";
@@ -7,6 +8,7 @@ import { addHoliday, removeHoliday } from "../actions";
 
 export default async function HolidaysPage() {
   await connection();
+  await requireAdmin(); // must run before any query: the layout guard does not stop a page from rendering
   const rows = await getDb().select().from(holidays).orderBy(asc(holidays.date));
   return (
     <>

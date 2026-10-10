@@ -1,4 +1,5 @@
 import { connection } from "next/server";
+import { requireAdmin } from "@/lib/session";
 import { desc, eq } from "drizzle-orm";
 import { getDb } from "@/db/client";
 import { enrollments, users } from "@/db/schema";
@@ -8,6 +9,7 @@ import { createEnrollment } from "../actions";
 
 export default async function EnrollmentsPage() {
   await connection();
+  await requireAdmin(); // must run before any query: the layout guard does not stop a page from rendering
   const db = getDb();
   const all = await db.select().from(users).orderBy(users.name);
   const hol = new Set((await db.select().from(holidays)).map((h) => h.date));

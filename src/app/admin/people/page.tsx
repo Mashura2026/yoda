@@ -1,4 +1,5 @@
 import { connection } from "next/server";
+import { requireAdmin } from "@/lib/session";
 import { asc } from "drizzle-orm";
 import { getDb } from "@/db/client";
 import { roles, ROLES, users } from "@/db/schema";
@@ -6,6 +7,7 @@ import { addPerson } from "../actions";
 
 export default async function PeoplePage() {
   await connection();
+  await requireAdmin(); // must run before any query: the layout guard does not stop a page from rendering
   const db = getDb();
   const people = await db.select().from(users).orderBy(asc(users.name));
   const allRoles = await db.select().from(roles);

@@ -1,10 +1,12 @@
 import { connection } from "next/server";
+import { requireAdmin } from "@/lib/session";
 import { isNotNull } from "drizzle-orm";
 import { getDb } from "@/db/client";
 import { programTasks, settings } from "@/db/schema";
 
 export default async function Overview() {
   await connection();
+  await requireAdmin(); // must run before any query: the layout guard does not stop a page from rendering
   const db = getDb();
   const pendingSettings = await db.select().from(settings).where(isNotNull(settings.pendingOwner));
   const pendingTasks = await db.select().from(programTasks).where(isNotNull(programTasks.pendingOwner));

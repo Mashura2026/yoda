@@ -1,4 +1,5 @@
 import { connection } from "next/server";
+import { requireAdmin } from "@/lib/session";
 import { asc, eq } from "drizzle-orm";
 import { getDb } from "@/db/client";
 import { programs, programTasks } from "@/db/schema";
@@ -6,6 +7,7 @@ import { updateTask } from "../actions";
 
 export default async function ProgramsPage() {
   await connection();
+  await requireAdmin(); // must run before any query: the layout guard does not stop a page from rendering
   const db = getDb();
   const progs = await db.select().from(programs).orderBy(asc(programs.track), asc(programs.version));
   const sections = await Promise.all(
