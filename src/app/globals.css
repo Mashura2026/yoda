@@ -1,26 +1,72 @@
-@import "tailwindcss";
+/* Brand fonts, site-wide (decision 90): Basel Grotesk and Plaid Mono S from public/fonts. */
+@font-face { font-family: "Basel Grotesk"; src: url("/fonts/basel-grotesk-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Basel Grotesk"; src: url("/fonts/basel-grotesk-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Basel Grotesk"; src: url("/fonts/basel-grotesk-book.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Basel Grotesk"; src: url("/fonts/basel-grotesk-medium.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Basel Grotesk"; src: url("/fonts/basel-grotesk-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Plaid Mono S"; src: url("/fonts/plaid-mono-s.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #0f1a2e;
+  --paper: #ffffff;
+  --panel: #f7f8fa;
+  --line: #e2e5ea;
+  --muted: #5f6b7a;
+  --navy: #14213d;
+  --navy-2: #1d2f55;
+  --gold: #c9a24a;
+  --gold-soft: #f3ead3;
+  --green: #1f7a3f;
+  --amber: #a86a00;
+  --red: #b3261e;
+  --grey: #8c8c8c;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font: inherit; color: inherit; }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+.wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+.wrap.wide { max-width: 1180px; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Header */
+/* Header on the Mashura Internal UI kit (decision 69): chrome black with CUBEX Gradient 02, white type, the logomark. */
+.hdr { background: #000 radial-gradient(120% 120% at 8% 108%, #0b3f8f 0%, #061c3f 38%, #000000 72%); color: #fff; padding: 20px 0 18px; margin-bottom: 22px; font-family: "Basel Grotesk", "Basel Grotesk Trial", "Helvetica Neue", Arial, sans-serif; }
+.hdr .wrap { display: flex; align-items: center; gap: 14px; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; flex: none; background: #282828 center/cover no-repeat; box-shadow: 0 0 0 2px rgba(255,255,255,.28); display: grid; place-items: center; font-weight: 500; color: #fff; }
+.hdr .titles { flex: 1; min-width: 0; }
+.kicker { font-family: "Plaid Mono S", "Plaid Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; line-height: 14px; letter-spacing: .1em; text-transform: uppercase; color: #cccccc; font-weight: 400; }
+.hdr h1 { margin: 4px 0 0; font-size: 22px; line-height: 28px; font-weight: 500; letter-spacing: -.4px; }
+.who { font-size: 15px; color: #cccccc; text-align: right; }
+.hdr-mark { height: 34px; width: auto; flex: none; color: #fff; opacity: .92; margin-left: 8px; }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* States */
+.state { padding: 36px 0; color: var(--muted); }
+.state.err { color: var(--red); }
+.state button, .btn { background: none; border: 1px solid var(--line); border-radius: 4px; padding: 7px 14px; cursor: pointer; }
+.state button { display: block; margin-top: 12px; border-color: currentColor; }
+.btn:hover { border-color: var(--ink); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.skel { height: 110px; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 12px; background: linear-gradient(90deg,#fafafa 25%,#f0f1f4 37%,#fafafa 63%); background-size: 400% 100%; animation: sh 1.3s ease infinite; }
+@keyframes sh { 0% { background-position: 100% 0 } 100% { background-position: 0 0 } }
+.banner { border: 1px solid var(--line); background: var(--panel); padding: 12px 14px; border-radius: 6px; margin-bottom: 18px; font-size: 14px; }
+.banner.ok { border-color: var(--gold); background: var(--gold-soft); }
+.banner.warn { border-color: var(--red); color: var(--red); background: #fff; }
+
+
+/* Forms */
+label { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+select, input, textarea { width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 4px; background: #fff; font-size: 16px; }
+select:focus, input:focus, textarea:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 2px var(--gold-soft); }
+
+/* Tables */
+table.t { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 24px; }
+table.t th, table.t td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t th { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+.kv { display:grid; grid-template-columns: 180px 1fr; gap: 6px 14px; font-size: 14px; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; }
+.todo { font-family: var(--mono); font-size: 12px; background: var(--gold-soft); color: var(--navy); border-radius: 999px; padding: 2px 8px; }
+h2.sec2 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--navy); margin: 26px 0 8px; padding-bottom: 8px; border-bottom: 2px solid var(--navy); }
