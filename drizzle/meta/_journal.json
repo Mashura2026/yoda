@@ -15,6 +15,13 @@
       "when": 1791641885573,
       "tag": "0001_audit_append_only",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791651540363,
+      "tag": "0002_task_placeholder",
+      "breakpoints": true
     }
   ]
 }

@@ -84,3 +84,8 @@ export function formatLongDate(d: LocalDate): string {
     timeZone: "UTC",
   });
 }
+
+/** Calendar days from a to b (negative if b is earlier). */
+export function daysBetween(a: LocalDate, b: LocalDate): number {
+  return Math.round((toUtc(b) - toUtc(a)) / MS_PER_DAY);
+}

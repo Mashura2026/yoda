@@ -53,7 +53,8 @@ export const programTasks = pgTable("program_tasks", {
   dependencyType: text("dependency_type"), // docebo | partner | install_slot
   resourceUrl: text("resource_url"),
   sortOrder: integer("sort_order").notNull().default(0),
-  pendingOwner: text("pending_owner"), // TODO(owner) placeholder, shown to admins only
+  pendingOwner: text("pending_owner"), // TODO(owner) note shown to admins
+  placeholder: boolean("placeholder").notNull().default(false), // true = empty slot, hidden from trainees
 });
 
 export const gates = pgTable("gates", {

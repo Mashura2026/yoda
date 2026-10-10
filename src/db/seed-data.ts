@@ -26,12 +26,12 @@ export const RSD_TASKS: Task[] = [
   { code: "rsd-module-d", title: "Module D: SDR partnership working agreement", dueAnchor: "partner_start", dueOffsetDays: 30, dependencyType: "partner", sortOrder: 100 },
   { code: "rsd-inherited-book", title: "List inherited book by Opportunity ID", dueDay: 1, evidenceRequired: true, sortOrder: 5 },
   { code: "rsd-territory-plan", title: "Present territory plan to Suzi and Anton", dueDay: 90, evidenceRequired: true, sortOrder: 300 },
-  { code: "rsd-template-pending", title: "RSD weekly sequence and Modules A to H", dueDay: 90, sortOrder: 999, pendingOwner: "Suzi (approve v1.1 sections 4 and 5 before October 19, 2026)" },
+  { code: "rsd-template-pending", title: "RSD weekly sequence and Modules A to H", dueDay: 90, sortOrder: 999, placeholder: true, pendingOwner: "Suzi (approve v1.1 sections 4 and 5 before October 19, 2026)" },
 ];
 
 export const SDR_TASKS: Task[] = [
   ...FIELD,
-  { code: "sdr-weeks-4-13-pending", title: "SDR weeks 4 to 13", dueDay: 90, sortOrder: 999, pendingOwner: "Mike McQuarie (draft by early November 2026)" },
+  { code: "sdr-weeks-4-13-pending", title: "SDR weeks 4 to 13", dueDay: 90, sortOrder: 999, placeholder: true, pendingOwner: "Mike McQuarie (draft by early November 2026)" },
 ];
 
 export const GATES = [

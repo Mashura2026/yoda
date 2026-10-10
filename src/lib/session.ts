@@ -19,3 +19,13 @@ export async function requireAdmin(): Promise<Actor> {
   }
   return actor;
 }
+
+/** Resolves the signed-in Microsoft account to a Yoda user id. */
+export async function requireUserId(): Promise<number> {
+  const session = await auth();
+  const email = session?.user?.email?.toLowerCase();
+  if (!email) redirect("/api/auth/signin");
+  const [u] = await getDb().select().from(users).where(eq(users.email, email));
+  if (!u) throw new Error("Not a Yoda user");
+  return u.id;
+}

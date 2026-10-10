@@ -1,0 +1,1 @@
+ALTER TABLE "program_tasks" ADD COLUMN "placeholder" boolean DEFAULT false NOT NULL;
