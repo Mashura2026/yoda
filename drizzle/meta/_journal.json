@@ -22,6 +22,13 @@
       "when": 1791651540363,
       "tag": "0002_task_placeholder",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791651772578,
+      "tag": "0003_field_scheduling",
+      "breakpoints": true
     }
   ]
 }

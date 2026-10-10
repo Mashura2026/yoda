@@ -87,6 +87,7 @@ export const enrollments = pgTable("enrollments", {
   managerId: integer("manager_id").references(() => users.id),
   podPartnerId: integer("pod_partner_id").references(() => users.id),
   partnerStart: date("partner_start", { mode: "string" }),
+  territory: text("territory"), // TODO(Suzi): territory per trainee, shown to Phoebe
   provisional: boolean("provisional").notNull().default(false),
   status: enrollmentStatus("status").notNull().default("active"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -122,6 +123,8 @@ export const evidence = pgTable("evidence", {
   hostId: integer("host_id").references(() => users.id),
   verifiedBy: integer("verified_by").references(() => users.id),
   verifiedAt: timestamp("verified_at", { withTimezone: true }),
+  scheduledFor: date("scheduled_for", { mode: "string" }),
+  scheduledBy: integer("scheduled_by").references(() => users.id),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

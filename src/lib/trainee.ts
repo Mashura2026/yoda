@@ -14,6 +14,7 @@ export type TaskRow = {
   verified: number;
   required: number;
   waiting: boolean; // organizational dependency, never counts against the trainee
+  booked: { evidenceId: number; date: string | null; debrief: string | null }[];
 };
 
 export type TraineeView = {
@@ -65,6 +66,11 @@ export async function traineeView(db: AnyDb, userId: number, now: Date = new Dat
     .innerJoin(programTasks, eq(assignments.taskId, programTasks.id))
     .where(eq(assignments.enrollmentId, e.id));
 
+  const mineEv = await db
+    .select({ id: evidence.id, assignmentId: evidence.assignmentId, date: evidence.scheduledFor, debrief: evidence.debrief, verifiedAt: evidence.verifiedAt, type: evidence.type })
+    .from(evidence)
+    .innerJoin(assignments, eq(evidence.assignmentId, assignments.id))
+    .where(eq(assignments.enrollmentId, e.id));
   const ver = await db
     .select({ assignmentId: evidence.assignmentId })
     .from(evidence)
@@ -99,6 +105,7 @@ export async function traineeView(db: AnyDb, userId: number, now: Date = new Dat
       evidenceRequired: r.evidenceRequired, requiresHostVerification: r.requiresHostVerification,
       verified: verified.get(r.id) ?? 0, required: r.required,
       waiting: r.dependencyId != null && r.due == null,
+      booked: mineEv.filter((x) => x.assignmentId === r.id && x.type === "field_scheduled" && !x.verifiedAt).map((x) => ({ evidenceId: x.id, date: x.date, debrief: x.debrief })),
     };
     if (r.kind === "field_immersion") view.field.push(t);
     const complete = r.state === "done" || r.state === "verified" || r.state === "waived" ||

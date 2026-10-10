@@ -5,6 +5,7 @@ import { requireUserId } from "@/lib/session";
 import { traineeView, type TaskRow } from "@/lib/trainee";
 import Header from "@/components/Header";
 import { markDone, submitEvidence } from "./actions";
+import { debriefAction } from "../field-actions";
 
 function Task({ t, tone }: { t: TaskRow; tone?: "late" }) {
   const needsEvidence = t.evidenceRequired || t.requiresHostVerification;
@@ -17,6 +18,16 @@ function Task({ t, tone }: { t: TaskRow; tone?: "late" }) {
       {t.kind === "field_immersion" ? (
         <div className="meta"><span>{t.verified} of {t.required} verified</span>{t.state === "attended" ? <span>Waiting on host confirmation</span> : null}</div>
       ) : null}
+      {t.booked.map((b) => (
+        <form key={b.evidenceId} action={debriefAction} className="fields" style={{ gridTemplateColumns: "1fr", marginTop: 10 }}>
+          <input type="hidden" name="evidenceId" value={b.evidenceId} />
+          <div>
+            <label>Booked {b.date ? formatLongDate(b.date) : ""}. {b.debrief ? "Debrief saved. Edit it if needed." : "Add your debrief after you attend."}</label>
+            <textarea name="debrief" defaultValue={b.debrief ?? ""} />
+          </div>
+          <div><button className="btn">Save debrief</button></div>
+        </form>
+      ))}
       {t.state === "done" || t.state === "verified" ? null : needsEvidence ? (
         <details style={{ marginTop: 10 }}>
           <summary className="btn" style={{ display: "inline-block" }}>Add evidence</summary>
